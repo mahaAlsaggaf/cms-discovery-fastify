@@ -9,7 +9,8 @@
   },
   "include": [
     "apps/**/*",
-    "libs/**/*"
+    "libs/**/*",
+    "types/**/*"
   ],
   "exclude": [
     "node_modules",
