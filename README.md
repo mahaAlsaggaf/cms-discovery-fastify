@@ -1,6 +1,6 @@
 # NestJS CMS + Discovery (Fastify)
 
-A monorepo with two NestJS apps sharing a Postgres database and search abstraction layer.
+A podcast content management system built with NestJS and Fastify⚡️. This monorepo features two specialized applications: a CMS for content creators and administrators, and a MVP Discovery API for public content consumption. Both apps share a unified PostgreSQL database.
 
 ## Architecture
 
