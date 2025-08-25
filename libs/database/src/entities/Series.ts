@@ -32,6 +32,9 @@ export class Series extends BaseEntity {
   @Column({ default: 0 })
   seasons!: number;
 
-  @OneToMany(() => Episode, (e) => e.series) 
+  @OneToMany(() => Episode, e => e.series, {
+    cascade: false,                   
+    orphanedRowAction: 'delete',
+  })
   episodes!: Episode[];
 }

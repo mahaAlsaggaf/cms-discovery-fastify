@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Index, JoinColumn } from 'typeorm';
 import { Episode } from './Episode';
 
 @Entity('chapters')
@@ -18,6 +18,15 @@ export class Chapter {
   @Column({ nullable: true })
   imageUrl?: string;
 
-  @ManyToOne(() => Episode, (episode) => episode.chapters, { onDelete: 'CASCADE' })
+  @Index()
+  @Column()
+  episodeId!: number;
+
+  @ManyToOne(() => Episode, e => e.chapters, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'episodeId' })
   episode!: Episode;
+
 }

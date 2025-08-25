@@ -1,12 +1,10 @@
-import { Column, Entity, ManyToOne, OneToMany, Index, Generated } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, Index, Generated, JoinColumn } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 import { Series } from './Series';
 import { Chapter } from './Chapter';
 
 @Entity('episodes')
 export class Episode extends BaseEntity {
-  @Index()
-
   @Column({type: 'uuid', unique: true})
   @Generated('uuid')
   episodeId!: string;
@@ -38,10 +36,22 @@ export class Episode extends BaseEntity {
 
   @Column({default: 0})
   duration!: number;
-  
-  @ManyToOne(() => Series, (s) => s.episodes, { onDelete: 'CASCADE' }) 
+
+  @Index()
+  @Column()
+  seriesId!: number;
+
+  @ManyToOne(() => Series, s => s.episodes, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'seriesId' })
   series!: Series;
 
-  @OneToMany(() => Chapter, (chapter: Chapter) => chapter.episode, { cascade: true })
+  @OneToMany(() => Chapter, c => c.episode, {
+    cascade: ['insert', 'update'],
+    orphanedRowAction: 'delete',
+  })
   chapters!: Chapter[];
+
 }
