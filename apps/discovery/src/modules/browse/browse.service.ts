@@ -18,13 +18,12 @@ export class BrowseService {
     const qb = this.episodes.createQueryBuilder('e')
       .leftJoin('e.series', 's')
       .select([
-        'e.id AS e_id',
+        'e.episodeId AS e_id',
         'e.title AS e_title',
-        'e.description AS e_summary',
         'e."releaseDate" AS e_publishedAt',
         'e.duration AS e_durationSeconds',
-        'e."avatarUrl" AS e_coverUrl',
-        's.id AS s_id',
+        'e.avatar_url AS e_coverUrl',
+        's.podcastId AS s_id',
         's.title AS s_title',
       ])
       .orderBy('e."releaseDate"', 'DESC')
@@ -32,7 +31,7 @@ export class BrowseService {
 
     if (search) {
       const q = `%${search.toLowerCase()}%`;
-      qb.andWhere('(LOWER(e.title) LIKE :q OR LOWER(e.description) LIKE :q)', { q });
+      qb.andWhere('LOWER(e.title) LIKE :q', { q });
     }
 
     const rows = await qb.getRawMany();
@@ -40,7 +39,7 @@ export class BrowseService {
     const data = rows.map((r: any) => ({
       id: r.e_id,
       title: r.e_title,
-      summary: r.e_summary ?? null,
+      summary: null,
       publishedAt: r.e_publishedAt ?? null,
       durationSeconds: r.e_durationSeconds ?? null,
       coverUrl: r.e_coverUrl ?? null,
@@ -54,9 +53,8 @@ export class BrowseService {
     const row = await this.episodes.createQueryBuilder('e')
       .leftJoin('e.series', 's')
       .select([
-        'e.id AS e_id',
+        'e.episodeId AS e_id',
         'e.title AS e_title',
-        'e.description AS e_summary',
         'e.number AS e_episodeNumber',
         'e."seasonNumber" AS e_seasonNumber',
         'e."episodeType" AS e_type',
@@ -64,21 +62,21 @@ export class BrowseService {
         'e."releaseDate" AS e_publishedAt',
         'e."audioUrl" AS e_audioUrl',
         'e."videoUrl" AS e_videoUrl',
-        'e."avatarUrl" AS e_coverUrl',
+        'e.avatar_url AS e_coverUrl',
         'e."createdAt" AS e_createdAt',
         'e."updatedAt" AS e_updatedAt',
-        's.id AS s_id',
+        's.podcastId AS s_id',
         's.title AS s_title',
       ])
-      .where('e.id = :id', { id })
+      .where('e.episodeId = :id', { id })
       .getRawOne<any>();
 
     if (!row) return null;
 
     const obj = {
-      id: row.e_id,
+      episodeId: row.e_id,
       title: row.e_title,
-      summary: row.e_summary ?? null,
+      summary: null,
       episodeNumber: row.e_episodeNumber ?? null,
       seasonNumber: row.e_seasonNumber ?? null,
       type: row.e_type ?? null,
@@ -98,7 +96,7 @@ export class BrowseService {
   async listSeries(limit = 20): Promise<PublicSeriesListDto[]> {
     const rows = await this.series.createQueryBuilder('s')
       .select([
-        's.id AS id',
+        's.podcastId AS id',
         's.title AS title',
         's."createdAt" AS createdAt',
         '(SELECT COUNT(*) FROM episodes e WHERE e."seriesId" = s.id) AS episodesCount',
@@ -120,23 +118,24 @@ export class BrowseService {
   async getSeries(id: string): Promise<PublicSeriesDto | null> {
     const s = await this.series.createQueryBuilder('s')
       .select([
-        's.id AS id',
+        's.podcastId AS id',
         's.title AS title',
         's."createdAt" AS createdAt',
         's."updatedAt" AS updatedAt',
       ])
-      .where('s.id = :id', { id })
+      .where('s.podcastId = :id', { id })
       .getRawOne<any>();
 
     if (!s) return null;
 
     const eps = await this.episodes.createQueryBuilder('e')
+      .leftJoin('e.series', 'series')
       .select([
-        'e.id AS id',
+        'e.episodeId AS id',
         'e.title AS title',
         'e.number AS episodeNumber',
       ])
-      .where('e."seriesId" = :id', { id })
+      .where('series.podcastId = :id', { id })
       .orderBy('e."number"', 'ASC')
       .getRawMany();
 
