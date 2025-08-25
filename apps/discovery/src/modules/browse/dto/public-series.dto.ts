@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsUrl, IsNumber, IsArray } from 'class-validator';
+import { IsString, IsOptional, IsNumber, IsArray, IsDateString } from 'class-validator';
 import { Expose, Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -26,7 +26,7 @@ export class PublicSeriesListDto {
   title!: string;
 
   @ApiProperty({ description: 'Created at (ISO string)' })
-  @IsString()
+  @IsDateString()
   @Expose()
   createdAt!: string;
 
@@ -37,7 +37,7 @@ export class PublicSeriesListDto {
 }
 
 export class SeriesEpisodeLiteDto {
-  @ApiProperty({ description: 'Episode id', example: 'e1c1…' })
+  @ApiProperty({ description: 'Episode id', example: 'ba15a12e-f003-52a3-9dc0-dc675d6db010' })
   @IsString()
   @Expose()
   id!: string;
@@ -66,13 +66,13 @@ export class PublicSeriesDto {
   title!: string;
 
   @ApiProperty({ description: 'Created at (ISO string)' })
-  @IsString()
+  @IsDateString()
   @Expose()
   createdAt!: string;
 
   @ApiPropertyOptional({ description: 'Updated at (ISO string)' })
   @IsOptional()
-  @IsString()
+  @IsDateString()
   @Expose()
   updatedAt?: string;
 

@@ -45,6 +45,14 @@ export class CreateSeriesDto {
   duration!: number;
 
   @ApiPropertyOptional({
+    description: 'Avatar URL',
+    example: 'https://files.hosting.thmanyah.com/images/episodes/1714293283816-5742.jpg'
+  })
+  @IsOptional()
+  @IsUrl()
+  avatarUrl?: string;
+
+  @ApiPropertyOptional({
     description: 'Website URL',
     example: 'https://example.com'
   })

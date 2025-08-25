@@ -1,10 +1,10 @@
-import { IsString, IsOptional, IsNumber, IsUrl, IsEnum } from 'class-validator';
+import { IsString, IsOptional, IsNumber, IsUrl, IsEnum, IsDateString } from 'class-validator';
 import { Expose, Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { SeriesRefDto } from './public-series.dto';
 
 export class PublicEpisodeListDto {
-  @ApiProperty({ description: 'Episode id', example: 'e1c1…' })
+  @ApiProperty({ description: 'Episode id', example: 'ba15a12e-f003-52a3-9dc0-dc675d6db010' })
   @IsString()
   @Expose()
   id!: string;
@@ -19,12 +19,6 @@ export class PublicEpisodeListDto {
   @IsString()
   @Expose()
   summary?: string;
-
-  @ApiPropertyOptional({ description: 'Published at (ISO string)' })
-  @IsOptional()
-  @IsString()
-  @Expose()
-  publishedAt?: string;
 
   @ApiPropertyOptional({ description: 'Duration in seconds', example: 2730 })
   @IsOptional()
@@ -77,13 +71,13 @@ export class PublicEpisodeDto extends PublicEpisodeListDto {
   videoUrl?: string;
 
   @ApiProperty({ description: 'Created at (ISO string)' })
-  @IsString()
+  @IsDateString()
   @Expose()
   createdAt!: string;
 
   @ApiPropertyOptional({ description: 'Updated at (ISO string)' })
   @IsOptional()
-  @IsString()
+  @IsDateString()
   @Expose()
   updatedAt?: string;
 }
