@@ -2,7 +2,17 @@
 
 A monorepo with two NestJS apps sharing a Postgres database and search abstraction layer.
 
-## 🏗️ Project Structure
+## Architecture
+
+![System Architecture](docs/architecture.png)
+
+The system consists of:
+- **CMS App** - Admin API for content management
+- **Discovery App** - Public API for content browsing  
+- **Shared Database** - PostgreSQL with TypeORM
+- **External Search API** - Placeholder structure only (Algolia/Elasticsearch adapters not implemented)
+
+## Project Structure
 
 ```
 ├── apps/
