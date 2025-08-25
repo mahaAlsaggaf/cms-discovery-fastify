@@ -12,7 +12,7 @@ export default registerAs('database', (): TypeOrmModuleOptions => ({
   password: process.env.DB_PASSWORD || 'password',
   database: process.env.DB_NAME || 'thmanyah_db',
   entities: [Series, Episode, Chapter],
-  synchronize: process.env.NODE_ENV === 'development',
+  synchronize: true,
   logging: process.env.NODE_ENV === 'development',
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 }));
