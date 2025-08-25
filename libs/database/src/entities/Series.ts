@@ -1,27 +1,15 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, Generated } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 import { Episode } from './Episode';
 
 @Entity('series')
 export class Series extends BaseEntity {
+  @Column({ type: 'uuid', unique: true })
+  @Generated('uuid')
+  podcastId!: string;
 
-  @Column({ type: 'varchar', length: 300 }) 
-  title!: string;
-
-  @Column({ type: 'text', nullable: true }) 
-  description?: string;
-
-  @Column({
-    type: 'enum',
-    enum: ['podcast', 'documentary']
-  })
-  type!: 'podcast' | 'documentary';
-
-  @Column({default: ''})
-  thumbnailUrl!: string;
-
-  @Column()
-  category!: string;
+  @Column({default: 0})
+  duration!: number;
 
   @Column({
     type: 'enum',
@@ -29,5 +17,21 @@ export class Series extends BaseEntity {
   })
   language!: 'ar' | 'en';
 
-  @OneToMany(() => Episode, (e) => e.series) episodes!: Episode[];
+  @Column({
+    type: 'enum',
+    enum: ['podcast', 'documentary']
+  })
+  type!: 'podcast' | 'documentary';
+
+  @Column({ nullable: true })
+  websiteUrl?: string;
+
+  @Column({ nullable: true })
+  orgName?: string;
+
+  @Column({ default: 0 })
+  seasons!: number;
+
+  @OneToMany(() => Episode, (e) => e.series) 
+  episodes!: Episode[];
 }

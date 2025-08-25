@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigModule } from '@common/app-config.module';
 import { Series } from '@db/entities/Series';
 import { Episode } from '@db/entities/Episode';
+import { Chapter } from '@db/entities/Chapter';
 import { SeriesModule } from './modules/series/series.module';
 import { EpisodesModule } from './modules/episodes/episodes.module';
 
@@ -18,7 +19,7 @@ import { EpisodesModule } from './modules/episodes/episodes.module';
         password: process.env.DB_PASS,
         database: process.env.DB_NAME,
         ssl: (String(process.env.DB_SSL).toLowerCase() === 'true') ? { rejectUnauthorized: false } : false,
-        entities: [Series, Episode],
+        entities: [Series, Episode, Chapter],
         autoLoadEntities: true,
         synchronize: false,
       }),

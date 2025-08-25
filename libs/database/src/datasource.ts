@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { Series } from './entities/Series';
 import { Episode } from './entities/Episode';
+import { Chapter } from './entities/Chapter';
 
 const isTrue = (v?: string) => String(v).toLowerCase() === 'true';
 
@@ -13,7 +14,7 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASS || 'postgres',
   database: process.env.DB_NAME || 'cms-content',
   ssl: isTrue(process.env.DB_SSL) ? { rejectUnauthorized: false } : false,
-  entities: [Series, Episode],
+  entities: [Series, Episode, Chapter],
   migrations: [__dirname + '/migrations/*.{ts,js}'],
   synchronize: false,
   logging: false,
