@@ -4,14 +4,6 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { CreateChapterDto } from '../../chapters/dto/create-chapter.dto';
 
 export class CreateEpisodeDto {
-  @ApiPropertyOptional({
-    description: 'External episode ID (auto-generated if not provided)',
-    example: 'ba15a12e-f003-52a3-9dc0-dc675d6db010'
-  })
-  @IsOptional()
-  @IsString()
-  episodeId?: string;
-
   @ApiProperty({
     description: 'Episode title',
     example: 'الجزائر: تاريخ مختطف'

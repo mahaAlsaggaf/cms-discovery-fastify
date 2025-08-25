@@ -3,14 +3,6 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
 export class CreateSeriesDto {
-  @ApiPropertyOptional({
-    description: 'External podcast ID (auto-generated if not provided)',
-    example: '985515827'
-  })
-  @IsOptional()
-  @IsString()
-  podcastId?: string;
-
   @ApiProperty({
     description: 'Series title',
     example: 'فنجان مع عبدالرحمن أبومالح '
