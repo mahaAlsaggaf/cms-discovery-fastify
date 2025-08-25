@@ -78,7 +78,7 @@ The CMS API provides full CRUD operations for managing podcast content across th
 - Chapters
 
 
-**Available Endpoints:**
+### Available Endpoints:
 
 **Series Management:**
 - `GET /series` - List all series
