@@ -59,7 +59,7 @@ const searchResults = await fetch('http://localhost:3002/browse?q=searchterm&lim
 const episodes = await searchResults.json();
 
 // Get specific episode details
-const episode = await fetch('http://localhost:3002/browse/episodes/123');
+const episode = await fetch('http://localhost:3002/browse/episodes/ba15a12e-f003-52a3-9dc0-dc675d6db010');
 const episodeData = await episode.json();
 ```
 
