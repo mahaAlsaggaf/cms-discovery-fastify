@@ -8,6 +8,6 @@ async function bootstrap() {
   setupSwagger(app, 'Discovery');
   const port = +(process.env.DISCOVERY_PORT || 3002);
   await app.listen(port, '0.0.0.0');
-  console.log(`Discovery running on http://localhost:${port}/api`);
+  console.log(`Discovery running on http://localhost:${port}`);
 }
 bootstrap();
