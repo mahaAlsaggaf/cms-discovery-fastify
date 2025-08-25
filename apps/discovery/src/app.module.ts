@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfigModule } from '@common/app-config.module';
-import { Series } from '@db/entities/Series';
-import { Episode } from '@db/entities/Episode';
 import { BrowseModule } from './modules/browse/browse.module';
 import { SearchModule as SearchLibModule } from '@search/search.module';
 import { ConfigModule } from '@nestjs/config';
