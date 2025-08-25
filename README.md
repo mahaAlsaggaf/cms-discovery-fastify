@@ -12,7 +12,7 @@ The system consists of:
 - **Shared Database** - PostgreSQL with TypeORM
 - **External Search API** - Placeholder structure only (Algolia/Elasticsearch adapters not implemented)
 
-## Project Structure
+## 🏗️ Project Structure
 
 ```
 ├── apps/
@@ -73,29 +73,10 @@ const episodeData = await episode.json();
 ### For Admin Panel Developers (CMS API)
 
 The CMS API provides full CRUD operations for managing podcast content across three main resources:
+- Series
+- Episodes
+- Chapters
 
-```javascript
-// Series Management
-const newSeries = await fetch('http://localhost:3001/series', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ title: 'New Series', description: 'Description' })
-});
-
-// Episode Management
-const newEpisode = await fetch('http://localhost:3001/episodes', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ title: 'Episode Title', seriesId: 1 })
-});
-
-// Chapter Management
-const newChapter = await fetch('http://localhost:3001/chapters', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ title: 'Chapter 1', episodeId: 1, startTime: 0 })
-});
-```
 
 **Available Endpoints:**
 
@@ -116,7 +97,6 @@ const newChapter = await fetch('http://localhost:3001/chapters', {
 **Chapters Management:**
 - `GET /chapters` - List all chapters
 - `GET /chapters/:id` - Get specific chapter
-- `POST /chapters` - Create new chapter
 - `PATCH /chapters/:id` - Update chapter
 - `DELETE /chapters/:id` - Delete chapter
 

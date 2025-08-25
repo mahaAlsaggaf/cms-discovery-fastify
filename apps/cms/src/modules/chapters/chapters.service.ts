@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Chapter } from '@db/entities/Chapter';
-import { CreateChapterDto } from './dto/create-chapter.dto';
 import { UpdateChapterDto } from './dto/update-chapter.dto';
 
 @Injectable()
@@ -13,15 +12,12 @@ export class ChaptersService {
   ) { }
   
   findAll() { 
-    return this.repo.find({ 
-      relations: ['episode'] 
-    }); 
+    return this.repo.find(); 
   }
 
   async findOne(id: number){
     const chapter = await this.repo.findOne({
-      where: { id },
-      relations: ['episode'],
+      where: { id }
     });
 
     if (!chapter) {
@@ -29,10 +25,6 @@ export class ChaptersService {
     }
 
     return chapter;
-  }
-
-  create(createChapterDto: CreateChapterDto) { 
-    return this.repo.save(this.repo.create(createChapterDto)); 
   }
 
   async update(id: number, updateChapterDto: UpdateChapterDto){

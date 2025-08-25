@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { ChaptersService } from './chapters.service';
-import { CreateChapterDto } from './dto/create-chapter.dto';
 import { UpdateChapterDto } from './dto/update-chapter.dto';
 import { Chapter } from '@db/entities/Chapter';
 
@@ -34,17 +33,6 @@ export class ChaptersController {
   @ApiResponse({ status: 404, description: 'Chapter not found' })
   async findOne(@Param('id') id: string): Promise<Chapter> {
     return this.chaptersService.findOne(+id);
-  }
-
-  @Post()
-  @ApiOperation({ 
-    summary: 'Create a new chapter', 
-    description: 'Create a new chapter for an episode' 
-  })
-  @ApiResponse({ status: 201, description: 'Chapter created successfully' })
-  @ApiResponse({ status: 400, description: 'Invalid input data' })
-  async create(@Body() createChapterDto: CreateChapterDto): Promise<Chapter> {
-    return this.chaptersService.create(createChapterDto);
   }
 
   @Patch(':id')
